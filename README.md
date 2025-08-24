@@ -1,12 +1,12 @@
-###Dota 2 Overlay
+# Dota 2 Overlay
 
     Disclaimer: This project was created with the assistance of artificial intelligence. While the code has been designed to function properly, it may require additional testing and refinement for production use.
 
-##Overview
+## Overview
 
 Dota 2 Hero Counter Overlay is a desktop application that provides real-time hero counter information during Dota 2 matches. The application features an always-on-top overlay that displays hero counters, win rates, and hero images, helping players make informed decisions during hero selection.
 
-##Features
+## Features
 
     Real-time Hero Data: Fetches counter information directly from Dotabuff
 
@@ -20,8 +20,8 @@ Dota 2 Hero Counter Overlay is a desktop application that provides real-time her
 
     Standalone Overlay: Independent overlay window with hero selection and data fetching
 
-Installation
-Prerequisites
+## Installation
+### Prerequisites
 
     Python 3.7+
 
@@ -50,7 +50,7 @@ bash
 
 python main.py
 
-##Usage
+## Usage
 
    1. Main Window:
 
@@ -76,10 +76,10 @@ python main.py
 
       *  Customize appearance (themes, opacity, overlay size)
 
-##Configuration
-#API Keys
+## Configuration
+### API Keys
 
-#The application requires a Steam API key to fetch hero images:
+### The application requires a Steam API key to fetch hero images:
 
    * Obtain a Steam API key from Steam Web API
 
@@ -87,7 +87,7 @@ python main.py
 
    * Enter your API key in the "Steam API Key" field
 
-##Themes
+## Themes
 
 Choose from multiple themes:
 
@@ -98,7 +98,7 @@ Choose from multiple themes:
    * Custom (with color picker)
 
 
-##Dependencies
+## Dependencies
 
   *  PyQt5 - GUI framework
 
@@ -110,7 +110,7 @@ Choose from multiple themes:
 
   *  Cryptography - Secure data encryption
 
-##Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
@@ -124,7 +124,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
    5. Open a Pull Request
 
-##License
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 Disclaimer
@@ -133,4 +133,5 @@ This application is not affiliated with or endorsed by Valve Corporation, Dota 2
 Support
 
 If you encounter any issues or have questions, please open an issue on GitHub.
+
 
