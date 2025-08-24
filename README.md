@@ -1,6 +1,8 @@
 # Dota 2 Overlay
 
-    Disclaimer: This project was created with the assistance of artificial intelligence. While the code has been designed to function properly, it may require additional testing and refinement for production use.
+> Disclaimer: This project was created with the assistance of artificial intelligence.
+> While the code has been designed to function properly,
+> it may require additional testing and refinement for production use.
 
 ## Overview
 
@@ -8,26 +10,26 @@ Dota 2 Hero Counter Overlay is a desktop application that provides real-time her
 
 ## Features
 
-    Real-time Hero Data: Fetches counter information directly from Dotabuff
+  *  Real-time Hero Data: Fetches counter information directly from Dotabuff
 
-    Overlay Mode: Always-on-top transparent overlay that can be positioned anywhere on screen
+  *  Overlay Mode: Always-on-top transparent overlay that can be positioned anywhere on screen
 
-    Hero Images: Displays hero images using Steam CDN
+  *  Hero Images: Displays hero images using Steam CDN
 
-    Customizable Appearance: Multiple theme options and customizable overlay size/opacity
+  *  Customizable Appearance: Multiple theme options and customizable overlay size/opacity
 
-    Secure API Key Storage: Encrypted storage for API keys
+  *  Secure API Key Storage: Encrypted storage for API keys
 
-    Standalone Overlay: Independent overlay window with hero selection and data fetching
+  *  Standalone Overlay: Independent overlay window with hero selection and data fetching
 
 ## Installation
 ### Prerequisites
 
-    Python 3.7+
+  *  Python 3.7+
 
-    Firefox browser (for Selenium webdriver)
+  *  Firefox browser (for Selenium webdriver)
 
-    Geckodriver (included with Selenium or can be installed separately)
+  *  Geckodriver (included with Selenium or can be installed separately)
 
 Steps
 
@@ -133,6 +135,7 @@ This application is not affiliated with or endorsed by Valve Corporation, Dota 2
 Support
 
 If you encounter any issues or have questions, please open an issue on GitHub.
+
 
 
 
