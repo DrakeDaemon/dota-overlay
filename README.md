@@ -62,11 +62,11 @@ python main.py
 
    2. Overlay Window:
 
-        Drag to reposition the overlay anywhere on screen
+      *  Drag to reposition the overlay anywhere on screen
 
-        Select heroes directly from the overlay's dropdown
+      *  Select heroes directly from the overlay's dropdown
 
-        Click "Fetch" to update the overlay with new hero data
+      *  Click "Fetch" to update the overlay with new hero data
 
    3. Settings:
 
@@ -133,5 +133,6 @@ This application is not affiliated with or endorsed by Valve Corporation, Dota 2
 Support
 
 If you encounter any issues or have questions, please open an issue on GitHub.
+
 
 
