@@ -35,16 +35,22 @@ Dota 2 Hero Counter Overlay is a desktop application that provides real-time her
 
 1. Clone the repository:
 
-`git clone https://github.com/yourusername/dota2-hero-counter-overlay.git 
-cd dota2-hero-counter-overlay `
+```
+git clone https://github.com/yourusername/dota2-hero-counter-overlay.git 
+cd dota2-hero-counter-overlay
+```
 
 2. Install required dependencies:
 
-`pip install -r requirements.txt `
+```
+pip install -r requirements.txt 
+```
 
 3. Run the application:
 
-`python main.py `
+```
+python main.py 
+```
 
 ## Usage
 
@@ -129,6 +135,7 @@ This application is not affiliated with or endorsed by Valve Corporation, Dota 2
 Support
 
 If you encounter any issues or have questions, please open an issue on GitHub.
+
 
 
 
