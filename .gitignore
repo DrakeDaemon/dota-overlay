@@ -1,3 +1,7 @@
 .vscode
 .qodo
 __pycache__
+release
+build
+.gitignore
+.spec

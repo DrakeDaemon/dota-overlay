@@ -1,8 +1,11 @@
-import requests
-from bs4 import BeautifulSoup as bs
-from selenium import webdriver
+from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
 from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.common.by import By
 from PyQt5.QtCore import QThread, pyqtSignal
+from selenium import webdriver
+from datetime import datetime
+import requests
+
 
 class FetchWorker(QThread):
     finished = pyqtSignal(dict, object)
@@ -17,28 +20,40 @@ class FetchWorker(QThread):
         
     def run(self):
         try:
+            start = datetime.now()
             self.progress.emit(10)
             
             # Initialize webdriver only when needed (lazy loading)
             options = Options()
             options.add_argument("--headless")
+            options.add_argument("--disable-images")
+            options.add_argument("--disable-gpu")
+            options.add_argument("--no-sandbox")
+            options.add_argument("--disable-dev-shm-usage")
+            options.add_argument("--disable-extensions")
+            options.add_argument("--disable-application-cache")
+            options.add_argument("--disable-background-timer-throttling")
+            options.add_argument("--disable-backgrounding-occluded-windows")
+            options.add_argument("--disable-renderer-backgrounding")
+            options.add_argument("--disable-cache")
+            options.add_argument("--disk-cache-size=0")
+            options.add_argument("--disable-notifications")
+            options.add_argument("--disable-popup-blocking")
+            options.add_argument("--ignore-certificate-errors")
+            options.add_argument("--disable-web-security")
+            options.add_argument("--disable-logging")
+            options.add_argument("--log-level=3")
+            options.add_argument("--output=/dev/null")
+            options.add_argument("--blink-settings=imagesEnabled=false")
+            options.page_load_strategy = 'eager'
             self.driver = webdriver.Firefox(options=options)
-            self.driver.implicitly_wait(5)
+            self.driver.implicitly_wait(2)
             
             self.progress.emit(30)
-            url = "https://dotabuff.com"
-            path = f"/heroes/{self.hero_name}/counters"
-            path2 = f"/heroes/{self.hero_name}"
+            url = f"https://dotabuff.com/heroes/{self.hero_name}/counters"
             
             self.progress.emit(40)
-            counters_link = self.parse(url, path)
-            
-            self.progress.emit(60)
-            winrate_page = self.parse(url, path2)
-            
-            self.progress.emit(70)
-            hero_info = self.get_hero_info(counters_link, winrate_page)
-            
+            hero_info = self.parse_hero_data(url)
             
             self.progress.emit(90)
             # Get hero image
@@ -47,46 +62,67 @@ class FetchWorker(QThread):
             self.progress.emit(100)
             self.finished.emit(hero_info, hero_image)
             
+            print(datetime.now() - start)
         except Exception as e:
             print(f"Error fetching data: {e}")
+            self.progress.emit(f"Error fetching data: {e}")
             self.finished.emit({}, None)
         finally:
             # Clean up driver
             if self.driver:
                 self.driver.quit()
     
-    def parse(self, url: str, path: str):
-        self.driver.get(url + path)
-        soup = bs(self.driver.page_source, "lxml")
-        return soup
-
-    def get_hero_info(self, soup, soup2):
-        hero_list = list()
-        counters_list = list()
-        info = dict()
-        x = 1
+    def parse_hero_data(self, url: str):
+        self.driver.get(url)
         
-        while x <= 6:
-            contrpeek = soup.select(f"div.col-6:nth-child(1) > section:nth-child(1) > article:nth-child(2) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child({x}) > td:nth-child(2)")
-            counters = soup.select(f"div.col-6:nth-child(2) > section:nth-child(1) > article:nth-child(2) > table:nth-child(1) > tbody:nth-child(2) > tr:nth-child({x}) > td:nth-child(2)")
-            x = x + 1
-            
-            for hvalue in contrpeek:
-                hvalue = hvalue.string
-                hero_list.append(hvalue)
-            
-            for value in counters:
-                value = value.string
-                counters_list.append(value)
+        hero_list = []
+        counters_list = []
+        winrate = "N/A"
         
+        # Get counter peeks (heroes this hero counters)
+        counter_peek_rows = self.driver.find_elements(
+            By.CSS_SELECTOR, 
+            "div.col-6:nth-child(1) > section:nth-child(1) > article:nth-child(2) > table:nth-child(1) > tbody:nth-child(2) > tr"
+        )
+        
+        for row in counter_peek_rows[:6]:  # Limit to top 6
+            try:
+                hero_name = row.find_element(By.CSS_SELECTOR, "td:nth-child(2)").text
+                hero_list.append(hero_name)
+            except:
+                continue
+        
+        # Get counters (heroes that counter this hero)
+        counter_rows = self.driver.find_elements(
+            By.CSS_SELECTOR, 
+            "div.col-6:nth-child(2) > section:nth-child(1) > article:nth-child(2) > table:nth-child(1) > tbody:nth-child(2) > tr"
+        )
+        
+        for row in counter_rows[:6]:  # Limit to top 6
+            try:
+                hero_name = row.find_element(By.CSS_SELECTOR, "td:nth-child(2)").text
+                counters_list.append(hero_name)
+            except:
+                continue
+        
+        # Try to get winrate from the page
         try:
-            winrate = soup2.find("span", class_="won").get_text()
+            # First check if winrate is available on the counters page
+            winrate_element = self.driver.find_element(By.CSS_SELECTOR, "dd:nth-child(4)")
+            winrate = winrate_element.text
         except:
-            winrate = "N/A"
+            try:
+                # Alternative selector for winrate
+                winrate_element = self.driver.find_element(By.CSS_SELECTOR, ".won")
+                winrate = winrate_element.text
+            except:
+                winrate = "N/A"
         
-        info.update({"Counter peeks": hero_list})
-        info.update({"Countered by": counters_list})
-        info.update({"Winrate": winrate})
+        info = {
+            "Counter peeks": hero_list,
+            "Countered by": counters_list,
+            "Winrate": winrate
+        }
         
         return info
     
