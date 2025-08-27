@@ -6,7 +6,7 @@
 
 ## Overview
 
-Dota 2 Hero Counter Overlay is a desktop application that provides real-time hero counter information during Dota 2 matches. The application features an always-on-top overlay that displays hero counters, win rates, and hero images, helping players make informed decisions during hero selection.
+Dota 2 Hero Counter Overlay is a desktop application that provides real-time hero counter information during Dota 2 matches. The application features an always-on-top overlay that displays hero counters, win rates, and hero images, helping players make informed decisions during hero selection. 
 
 ## Features
 
@@ -135,6 +135,10 @@ This application is not affiliated with or endorsed by Valve Corporation, Dota 2
 Support
 
 If you encounter any issues or have questions, please open an issue on GitHub.
+
+## Known Issues
+
+1. Winrate is not working properly on some heroes
 
 
 
